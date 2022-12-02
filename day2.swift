@@ -23,10 +23,86 @@ func day2Part1() -> Int {
         .reduce(0, +)
 }
 
+///
+/// Sample input:
+/// A Y
+/// B X
+/// C Z
+///
+/// (1+3)
+/// (1+0)
+/// (1+6)
+/// => 12
+///
+func day2Part2() -> Int {
+    let inputLines = getInputLines(fileName: "day2_input.txt")
+    let resultPairs = inputLines.map { $0.components(separatedBy: CharacterSet.whitespaces) }
+        .filter { $0.count == 2 }
+        .map { (theirMove: Move.getMove(from: $0[0])!, neededResult: GameResult(from: $0[1])) }
+
+    return resultPairs
+        .map { pair -> Int in
+            let ourMove = getMoveNeeded(theirMove: pair.theirMove, gameResult: pair.neededResult!)
+            return ourMove.calculateScore(versus: pair.theirMove)
+        }
+        .reduce(0, +)
+}
+
 func getInputLines(fileName: String) -> [String] {
 
     guard let fileContents = try? String(contentsOfFile: fileName, encoding: .utf8) else { return [] }
     return fileContents.components(separatedBy: CharacterSet.newlines)
+}
+
+enum GameResult {
+    case lose
+    case tie
+    case win
+
+    init?(from string: String) {
+        switch string {
+        case "X":
+            self = .lose
+        case "Y":
+            self = .tie
+        case "Z":
+            self = .win
+        default:
+            return nil
+        }
+    }
+}
+
+func getMoveNeeded(theirMove: Move, gameResult: GameResult) -> Move {
+    switch theirMove {
+    case .rock:
+        switch gameResult {
+        case .lose:
+            return .scissors
+        case .tie:
+            return .rock
+        case .win:
+            return .paper
+        }
+    case .paper:
+        switch gameResult {
+        case .lose:
+            return .rock
+        case .tie:
+            return .paper
+        case .win:
+            return .scissors
+        }
+    case .scissors:
+        switch gameResult {
+        case .lose:
+            return .paper
+        case .tie:
+            return .scissors
+        case .win:
+            return .rock
+        }
+    }
 }
 
 enum Move {
@@ -49,11 +125,11 @@ enum Move {
 extension Move {
     static func getMove(from string: String) -> Move? {
         switch string {
-        case "A", "X":
+        case "A":
             return .rock
-        case "B", "Y":
+        case "B":
             return .paper
-        case "C", "Z":
+        case "C":
             return .scissors
         default:
             return nil
@@ -94,4 +170,5 @@ extension Move {
     }
 }
 
-print(day2Part1())
+// print(day2Part1())
+print(day2Part2())
