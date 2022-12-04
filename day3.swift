@@ -8,6 +8,20 @@ func day3Part1() -> Int {
         .reduce(0, +)
 }
 
+func day3Part2() -> Int {
+    let lines = getInputLines(fileName: "day3_input.txt")
+    var currIndex = 0
+    var prioritiesSum = 0
+    while currIndex < lines.count - 1 {
+        let grouping = Array(lines[currIndex..<(currIndex + 3)])
+        let commonChar = getCommonChar(grouping[0], grouping[1], grouping[2])
+        prioritiesSum += getPriorityVal(for: commonChar!)
+        currIndex += 3
+    }
+
+    return prioritiesSum
+}
+
 func getPriorityVal(for char: Character) -> Int {
     let charSet = CharacterSet(charactersIn: "\(char)")
     if charSet.isSubset(of: .uppercaseLetters) {
@@ -22,8 +36,12 @@ func halve(str: String) -> (String, String) {
     return (String(str.prefix(size / 2)), String(str.suffix(size / 2)))
 }
 
-func getCommonChar(_ str1: String, _ str2: String) -> Character? {
-    str1.filter { str2.contains($0) }.first
+func getCommonChar(_ str1: String, _ str2: String, _ str3: String? = nil) -> Character? {
+    guard let str3 else {
+        return str1.filter { str2.contains($0) }.first
+    }
+
+    return str1.filter { str2.contains($0) && str3.contains($0) }.first
 }
 
 func getInputLines(fileName: String) -> [String] {
@@ -31,4 +49,5 @@ func getInputLines(fileName: String) -> [String] {
     return fileContents.components(separatedBy: CharacterSet.newlines)
 }
 
-print(day3Part1())
+// print(day3Part1())
+print(day3Part2())
