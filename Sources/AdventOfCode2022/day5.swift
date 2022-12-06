@@ -35,6 +35,23 @@ struct Day5 {
         return String(stacks.compactMap { $0.first })
     }
 
+    func part2() -> String {
+        let inputLines = getInputLines(fileName: "day5_input")
+        let separator = inputLines.firstIndex(of: "")!
+        var puzzleStacksInput = inputLines[..<separator].filter { $0 != "" }
+        puzzleStacksInput.removeLast()
+        var stacks = populateStacks(using: puzzleStacksInput)
+        let instructions = inputLines[separator...].filter { $0 != "" }
+        instructions.map { parseInstruction($0) }
+            .forEach { instruction in
+                let elementsToMove = stacks[instruction.fromStack - 1].prefix(instruction.numToMove)
+                stacks[instruction.toStack - 1].prepend(contentsOf: elementsToMove)
+                stacks[instruction.fromStack - 1].removeFirst(instruction.numToMove)
+            }
+
+        return String(stacks.compactMap { $0.first })
+    }
+
     /*
      [D]
      [N] [C]
