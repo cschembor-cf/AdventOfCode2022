@@ -43,11 +43,3 @@ func getCommonChar(_ str1: String, _ str2: String, _ str3: String? = nil) -> Cha
 
     return str1.filter { str2.contains($0) && str3.contains($0) }.first
 }
-
-func getInputLines(fileName: String) -> [String] {
-    guard let fileContents = try? String(contentsOfFile: fileName, encoding: .utf8) else { return [] }
-    return fileContents.components(separatedBy: CharacterSet.newlines)
-}
-
-// print(day3Part1())
-print(day3Part2())

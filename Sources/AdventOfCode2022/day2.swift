@@ -48,12 +48,6 @@ func day2Part2() -> Int {
         .reduce(0, +)
 }
 
-func getInputLines(fileName: String) -> [String] {
-
-    guard let fileContents = try? String(contentsOfFile: fileName, encoding: .utf8) else { return [] }
-    return fileContents.components(separatedBy: CharacterSet.newlines)
-}
-
 enum GameResult {
     case lose
     case tie
@@ -169,6 +163,3 @@ extension Move {
         }
     }
 }
-
-// print(day2Part1())
-print(day2Part2())

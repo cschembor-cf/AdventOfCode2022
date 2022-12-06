@@ -1,5 +1,6 @@
 import Foundation
 
+@available(macOS 13.0, *)
 func part1() -> Int {
     getInputLines(fileName: "day4_input.txt")
         .map { getPairs(from: $0) }
@@ -26,9 +27,8 @@ func getPairs(from str: String) -> (ClosedRange<Int>, ClosedRange<Int>) {
 }
 
 func getInputLines(fileName: String) -> [String] {
-     guard let fileContents = try? String(contentsOfFile: fileName, encoding: .utf8)  else { return [] }
-     return fileContents.components(separatedBy: CharacterSet.newlines).dropLast()
- }
+    guard let path = Bundle.module.path(forResource: fileName, ofType: "txt") else { return [] }
+    guard let fileContents = try? String(contentsOfFile: path, encoding: .utf8) else { return [] }
 
- // print(part1())
- print(part2())
+    return fileContents.components(separatedBy: CharacterSet.newlines).dropLast()
+ }
