@@ -21,7 +21,8 @@ let package = Package(
             dependencies: [
                 .product(name: "Collections", package: "swift-collections")
             ], resources: [
-                .process("day5_input.txt")
+                .process("day5_input.txt"),
+                .process("day6_input.txt")
             ]),
         .testTarget(
             name: "AdventOfCode2022Tests",
