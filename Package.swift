@@ -22,7 +22,8 @@ let package = Package(
                 .product(name: "Collections", package: "swift-collections")
             ], resources: [
                 .process("day5_input.txt"),
-                .process("day6_input.txt")
+                .process("day6_input.txt"),
+                .process("day7_input.txt")
             ]),
         .testTarget(
             name: "AdventOfCode2022Tests",
