@@ -4,6 +4,6 @@ public struct AdventOfCode2022 {
     public private(set) var text = "Hello, World!"
 
     public static func main() {
-        print(Day7().part1())
+        print(Day8().part1())
     }
 }
