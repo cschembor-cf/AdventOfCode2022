@@ -28,38 +28,15 @@ class Day9 {
     func part1() -> Int {
 
         let input = getInputLines(fileName: "day9_input")
-//        let input = [
-//            "R 4",
-//            "U 4",
-//            "L 3",
-//            "D 1",
-//            "R 4",
-//            "D 1",
-//            "L 5",
-//            "R 2"
-//        ]
         var head = Coord(x: 0, y: 0)
         var tail = Coord(x: 0, y: 0)
 
         input.map { Instruction(from: $0) }
-            .map { instr in
+            .forEach { instr in
                 let (newHead, newTail) = move(head: head, tail: tail, instr: instr)
                 head = newHead
                 tail = newTail
-
-                return (head, tail)
             }
-
-        print("*************")
-        visited.sorted(by: { c1, c2 in
-            c1.x < c2.x
-        })
-        .sorted(by: { c1, c2 in
-            c1.y < c2.y
-        })
-        .forEach { print($0) }
-        print("*************")
-        print("count: \(self.visited.count)")
 
         return visited.count
     }
@@ -81,7 +58,6 @@ class Day9 {
             let newHead = Coord(x: head.x-1, y: head.y)
             let newTail: Coord = {
                 if !areAdjacent(newHead, tail) && newHead != tail {
-                    print("h: \(newHead), t: \(tail)")
                     return Coord(x: newHead.x+1, y: newHead.y)
                 }
                 return tail
@@ -92,7 +68,6 @@ class Day9 {
             let newHead = Coord(x: head.x+1, y: head.y)
             let newTail: Coord = {
                 if !areAdjacent(newHead, tail) && newHead != tail {
-                    print("h: \(newHead), t: \(tail)")
                     return Coord(x: newHead.x-1, y: newHead.y)
                 }
                 return tail
@@ -104,7 +79,6 @@ class Day9 {
             let newHead = Coord(x: head.x, y: head.y+1)
             let newTail: Coord = {
                 if !areAdjacent(newHead, tail) && newHead != tail {
-                    print("h: \(newHead), t: \(tail)")
                     return Coord(x: newHead.x, y: newHead.y-1)
                 }
                 return tail
@@ -116,7 +90,6 @@ class Day9 {
             let newHead = Coord(x: head.x, y: head.y-1)
             let newTail: Coord = {
                 if !areAdjacent(newHead, tail) && newHead != tail {
-                    print("h: \(newHead), t: \(tail)")
                     return Coord(x: newHead.x, y: newHead.y+1)
                 }
                 return tail
