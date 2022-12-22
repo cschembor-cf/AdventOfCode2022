@@ -24,7 +24,8 @@ let package = Package(
                 .process("day5_input.txt"),
                 .process("day6_input.txt"),
                 .process("day7_input.txt"),
-                .process("day8_input.txt")
+                .process("day8_input.txt"),
+                .process("day9_input.txt")
             ]),
         .testTarget(
             name: "AdventOfCode2022Tests",
